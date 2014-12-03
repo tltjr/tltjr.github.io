@@ -109,6 +109,20 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header" id="header"></h1>
+                        <ul data-bind="foreach: books">
+                            <li>
+                                <strong>
+                                    <a data-bind="attr: { href: url }, text: title"></a>
+                                    <!--<a href="http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html">
+                                        THE BONE CLOCKS
+                                    </a>-->
+                                </strong> 
+                                <em>  by David Mitchell</em> 
+                                <p>
+                                    In this latest head-spinning flight into other dimensions from the author of "Cloud Atlas," all borders between pubby England and the machinations of the undead begin to blur.
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -123,6 +137,9 @@
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+
+    <!-- knockout -->
+    <script src="js/knockout-2.2.0.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -154,6 +171,20 @@
             e.preventDefault();
             $("#header").text("Man Booker Short List");
         });
+        
+        function Book(url, title) {
+            var self = this;
+            self.url = ko.observable(url);
+            self.title = ko.observable(title);
+        }
+        
+        var books = [];
+        books.push(new Book("http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html", "THE BONE CLOCKS"));
+        function ViewModel() {
+            var self = this;
+            self.books = ko.observableArray(books);
+        }
+        ko.applyBindings(new ViewModel());
     </script>
 
 </body>
