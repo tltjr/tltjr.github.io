@@ -81,8 +81,11 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#" id="nyt-notable">New York Times Notable Books 2014</a>
+                        </li> -->
+                        <li>
+                            <a href="#" id="nyt-10best">New York Times 10 Best Books of 2014</a>
                         </li>
                         <li>
                             <a href="#" id="huffpost">Huffington Post Best Books 2014</a>
@@ -113,14 +116,9 @@
                             <li>
                                 <strong>
                                     <a data-bind="attr: { href: url }, text: title"></a>
-                                    <!--<a href="http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html">
-                                        THE BONE CLOCKS
-                                    </a>-->
                                 </strong> 
-                                <em>  by David Mitchell</em> 
-                                <p>
-                                    In this latest head-spinning flight into other dimensions from the author of "Cloud Atlas," all borders between pubby England and the machinations of the undead begin to blur.
-                                </p>
+                                <em data-bind="text: author"></em> 
+                                <p data-bind="text: description"></p>
                             </li>
                         </ul>
                     </div>
@@ -151,13 +149,28 @@
     <script src="js/sb-admin-2.js"></script>
 
     <script type="text/javascript">
+
+        function ViewModel() {
+            var self = this;
+            self.books = ko.observable();
+        }
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+
+        $("#nyt-10best").click(function (e) {
+            e.preventDefault();
+            $("#header").text("New York Times 10 Best Books of 2014");
+            viewModel.books(nytTenBest);
+        });
         $("#nyt-notable").click(function (e) {
             e.preventDefault();
             $("#header").text("New York Times Notable Books 2014");
+            viewModel.books(nytNotable);
         });
         $("#huffpost").click(function (e) {
             e.preventDefault();
             $("#header").text("Huffington Post Best Books 2014");
+            viewModel.books(huffpostBest);
         });
         $("#pubweekly").click(function (e) {
             e.preventDefault();
@@ -172,19 +185,45 @@
             $("#header").text("Man Booker Short List");
         });
         
-        function Book(url, title) {
+        function Book(title, author, url, description) {
             var self = this;
-            self.url = ko.observable(url);
             self.title = ko.observable(title);
+            self.author = ko.observable(author);
+            self.url = ko.observable(url);
+            self.description = ko.observable(description);
         }
+
+        var allthelightwecannotsee = new Book("All the Light We Cannot See", "  by Anthony Doerr",
+                                  "http://www.amazon.com/gp/product/1476746583/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1476746583&linkCode=as2&tag=ultboolis-20&linkId=PLT7OFPN7WT52ZSK",
+                                  "From the highly acclaimed, multiple award-winning Anthony Doerr, the beautiful, stunningly ambitious instant New York Times bestseller about a blind French girl and a German boy whose paths collide in occupied France as both try to survive the devastation of World War II.  Marie-Laure lives with her father in Paris near the Museum of Natural History, where he works as the master of its thousands of locks. When she is six, Marie-Laure goes blind and her father builds a perfect miniature of their neighborhood so she can memorize it by touch and navigate her way home. When she is twelve, the Nazis occupy Paris and father and daughter flee to the walled citadel of Saint-Malo, where Marie-Laure's reclusive great-uncle lives in a tall house by the sea. With them they carry what might be the museum's most valuable and dangerous jewel.  In a mining town in Germany, the orphan Werner grows up with his younger sister, enchanted by a crude radio they find. Werner becomes an expert at building and fixing these crucial new instruments, a talent that wins him a place at a brutal academy for Hitler Youth, then a special assignment to track the resistance. More and more aware of the human cost of his intelligence, Werner travels through the heart of the war and, finally, into Saint-Malo, where his story and Marie-Laure's converge.  Doerr's \"stunning sense of physical detail and gorgeous metaphors\" (San Francisco Chronicle) are dazzling. Deftly interweaving the lives of Marie-Laure and Werner, he illuminates the ways, against all odds, people try to be good to one another. Ten years in the writing, All the Light We Cannot See is a magnificent, deeply moving novel from a writer \"whose sentences never fail to thrill\" (Los Angeles Times).");
+
+        var allournames = new Book("All Our Names", "  by Dinaw Mengestu",
+                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "With great sadness and much hard truth, Mengestu's novel looks at a relationship of shared dependencies between a Midwestern social worker and a bereft African immigrant.");
+
+
+        var boneclocks = new Book("The Bone Clocks", "  by David Mitchell",
+                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "In this latest head-spinning flight into other dimensions from the author of \"Cloud Atlas,\" all borders between pubby England and the machinations of the undead begin to blur.");
+
+        var briefhistoryofsevenkillings = new Book("A Brief History of Seven Killings", "  by Marlon James",
+                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "Any review of Marlon James' opus must note that it is emphatically not brief, at nearly 700 dense pages, and it's so packed with murders that sometimes seven occur within just a couple of those pages. ");
+
+        var everythinginevertoldyou = new Book("Everything I Never Told You", "  by Celeste Ng",
+                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "Celeste Ng's debut novel melds mystery with family saga for a truly heartbreaking page-turner. Lydia Lee, the teenage daughter of blond Marilyn and Chinese-American James, has disappeared, and with her she's taken the fragile balance of the family's ecosystem.");
+
         
-        var books = [];
-        books.push(new Book("http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html", "THE BONE CLOCKS"));
-        function ViewModel() {
-            var self = this;
-            self.books = ko.observableArray(books);
-        }
-        ko.applyBindings(new ViewModel());
+        var nytNotable = [];
+        nytNotable.push(allournames);
+        nytNotable.push(boneclocks);
+        var nytTenBest = [];
+        nytTenBest.push(allthelightwecannotsee);
+        var huffpostBest = [];
+        huffpostBest.push(briefhistoryofsevenkillings);
+        huffpostBest.push(everythinginevertoldyou);
+
     </script>
 
 </body>
