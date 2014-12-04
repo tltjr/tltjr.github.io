@@ -1,0 +1,12 @@
+li.book-list-item {
+    list-style-type: none;
+}
+
+.book-title {
+    text-transform: uppercase;
+}
+
+#header {
+    padding-left: 40px;
+    font-size: 32px;
+}

@@ -20,6 +20,8 @@
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
+    <link href="css/custom.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -113,9 +115,9 @@
                     <div class="col-lg-12">
                         <h1 class="page-header" id="header"></h1>
                         <ul data-bind="foreach: books">
-                            <li>
+                            <li class="book-list-item">
                                 <strong>
-                                    <a data-bind="attr: { href: url }, text: title"></a>
+                                    <a class="book-title" data-bind="attr: { href: url }, text: title"></a>
                                 </strong> 
                                 <em data-bind="text: author"></em> 
                                 <p data-bind="text: description"></p>
@@ -193,35 +195,78 @@
             self.description = ko.observable(description);
         }
 
+        var nytNotable = [];
+        var nytTenBest = [];
+        var huffpostBest = [];
+
         var allthelightwecannotsee = new Book("All the Light We Cannot See", "  by Anthony Doerr",
                                   "http://www.amazon.com/gp/product/1476746583/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1476746583&linkCode=as2&tag=ultboolis-20&linkId=PLT7OFPN7WT52ZSK",
-                                  "From the highly acclaimed, multiple award-winning Anthony Doerr, the beautiful, stunningly ambitious instant New York Times bestseller about a blind French girl and a German boy whose paths collide in occupied France as both try to survive the devastation of World War II.  Marie-Laure lives with her father in Paris near the Museum of Natural History, where he works as the master of its thousands of locks. When she is six, Marie-Laure goes blind and her father builds a perfect miniature of their neighborhood so she can memorize it by touch and navigate her way home. When she is twelve, the Nazis occupy Paris and father and daughter flee to the walled citadel of Saint-Malo, where Marie-Laure's reclusive great-uncle lives in a tall house by the sea. With them they carry what might be the museum's most valuable and dangerous jewel.  In a mining town in Germany, the orphan Werner grows up with his younger sister, enchanted by a crude radio they find. Werner becomes an expert at building and fixing these crucial new instruments, a talent that wins him a place at a brutal academy for Hitler Youth, then a special assignment to track the resistance. More and more aware of the human cost of his intelligence, Werner travels through the heart of the war and, finally, into Saint-Malo, where his story and Marie-Laure's converge.  Doerr's \"stunning sense of physical detail and gorgeous metaphors\" (San Francisco Chronicle) are dazzling. Deftly interweaving the lives of Marie-Laure and Werner, he illuminates the ways, against all odds, people try to be good to one another. Ten years in the writing, All the Light We Cannot See is a magnificent, deeply moving novel from a writer \"whose sentences never fail to thrill\" (Los Angeles Times).");
+                                  "With brisk chapters and sumptuous language, Doerr's second novel follows two characters whose paths will intersect in the waning days of World War II: an orphaned engineering prodigy recruited into the Nazi ranks, and a blind French girl who joins the Resistance. Tackling questions of survival, endurance and moral obligations during wartime, the book is as precise and artful and ingenious as the puzzle boxes the heroine's locksmith father builds for her. Impressively, it is also a vastly entertaining feat of storytelling.");
+        nytTenBest.push(allthelightwecannotsee);
+
+        var deptofspeculation = new Book("Dept. of Speculation", "  by Jenny Offill",
+                                  "http://www.amazon.com/gp/product/0345806875/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0345806875&linkCode=as2&tag=ultboolis-20&linkId=ZFMQQ6ECHOUWVV6R",
+                                  "Offill's slender and cannily paced novel, her second, assembles fragments, observations, meditations and different points of view to chart the course of a troubled marriage. Wry and devastating in equal measure, the novel is a cracked mirror that throws light in every direction - on music and literature; science and philosophy; marriage and motherhood and infidelity; and especially love and the grueling rigors of domestic life. Part elegy and part primal scream, it's a profound and unexpectedly buoyant performance.");
+        nytTenBest.push(deptofspeculation);
+
+        var euphoria = new Book("Euphoria", "  by Lily King",
+                                  "http://www.amazon.com/gp/product/0802122558/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0802122558&linkCode=as2&tag=ultboolis-20&linkId=FHI43AXIDZGAASV6",
+                                  "In 1933, the anthropologist Margaret Mead took a field trip to the Sepik River in New Guinea with her second husband; they met and collaborated with the man who would become her third. King has taken the known details of that actual event and created this exquisite novel, her fourth, about the rewards and disappointments of intellectual ambition and physical desire. The result is an intelligent, sensual tale told with a suitable mix of precision and heat.");
+        nytTenBest.push(euphoria);
+
+        var familylife = new Book("Family Life", "  by Akhil Sharma",
+                                  "http://www.amazon.com/gp/product/0393060055/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0393060055&linkCode=as2&tag=ultboolis-20&linkId=W7FZC36EJZPVR2PW",
+                                  "Sharma's austere but moving novel tells the semi-autobiographical story of a family that immigrates from India to Queens, and has just begun to build a new life when the elder son suffers severe brain damage in a swimming pool accident. Deeply unnerving and gorgeously tender, the book chronicles how grief renders the parents unable to cherish and raise their other son; love, it suggests, becomes warped and jagged and even seemingly vanishes in the midst of mourning.");
+        nytTenBest.push(familylife);
+
+        var redeployment = new Book("Redeployment", "  by Phil Klay",
+                                  "http://www.amazon.com/gp/product/1594204993/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1594204993&linkCode=as2&tag=ultboolis-20&linkId=LBWPS7LCGVJ4KYHF",
+                                  "In this brilliant debut story collection, Klay - a former Marine who served in Iraq - shows what happens when young, heavily armed Americans collide with a fractured and deeply foreign country few of them even remotely understand. Iraq comes across not merely as a theater of war but as a laboratory for the human condition in extremis. The collection is hilarious, biting, whipsawing and sad: the best thing written so far on what the war did to people's souls.");
+        nytTenBest.push(redeployment);
+
+        var cantwetalk = new Book("Can't We Talk about something more pleasant?", "  by Roz Chast",
+                                  "http://www.amazon.com/gp/product/1608198065/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1608198065&linkCode=as2&tag=ultboolis-20&linkId=JAJPOM324EFMA6H4",
+                                  "Cartoons, it turns out, are tailor-made for the absurdities of old age, illness and dementia. In Chast's devastating and sublime graphic memoir, the odd dramas and repetitive minutiae find perfect expression in her signature antic drawings as she describes helping her parents navigate their final years - from packing up their cluttered Brooklyn apartment to getting a seat at the \"right\" table in the nursing home. No one has perfect parents, and no one can write a perfect book about them. But Chast has come close.");
+        nytTenBest.push(cantwetalk);
+
+        var onimmunity = new Book("on immunity", "  by Eula Biss",
+                                  "http://www.amazon.com/gp/product/1555976891/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1555976891&linkCode=as2&tag=ultboolis-20&linkId=UBROTCYZ6AF4T4R2",
+                                  "In this spellbinding blend of memoir, science journalism and literary criticism, Biss unpacks what the fear of vaccines tells us about larger anxieties involving purity, contamination and interdependency. Deeply researched and anchored in Biss's own experiences as a new mother, this ferociously intelligent book is itself an inoculation against bad science and superstition, and a reminder that we owe one another our lives.");
+        nytTenBest.push(onimmunity);
+
+        var penelopefitzgerald = new Book("penelope fitzgerald: a life", "  by Hermione Lee",
+                                  "http://www.amazon.com/gp/product/0385352344/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0385352344&linkCode=as2&tag=ultboolis-20&linkId=LT6NBNGKE3OG3Z4E",
+                                  "The life and times of that elusive, original miracle worker, the English novelist and biographer Penelope Fitzgerald, have been brilliantly captured by Lee, previously the author of masterly portraits of Virginia Woolf, Willa Cather and Edith Wharton. Growing up steeped in literature but sidetracked by the vicissitudes of life, Fitzgerald published her first book at 58 and did not become famous until she was 80. But her fiction, when it finally emerged, had a tamped-down force and intense compression, as if the decades-long wait had worked its own clarifying, crystallizing magic.");
+        nytTenBest.push(penelopefitzgerald);
+
+        var sixthextinction = new Book("The sixth extinction: an unnatural history", "  by Elizabeth Kolbert",
+                                  "http://www.amazon.com/gp/product/0805092994/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0805092994&linkCode=as2&tag=ultboolis-20&linkId=4OAOHTRSRXTDSXJD",
+                                  "Kolbert reports from the front lines of the violent collision between civilization and our planet's ecosystem - from the Great Barrier Reef to her own backyard - in this, her third, book. Traveling to some of the world's remotest corners, she examines how man-made climate change threatens to eliminate 20 to 50 percent of all living species on earth within this century. This is environmental writing at its most rigorous and richly detailed - and as riveting as any thriller.");
+        nytTenBest.push(sixthextinction);
+
+        var thirteendays = new Book("thirteen days in september: carter, begin, and sadat at camp david", "  by Lawrence Wright",
+                                  "http://www.amazon.com/gp/product/0385352034/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0385352034&linkCode=as2&tag=ultboolis-20&linkId=4TMV5YJR5QXQH5PM",
+                                  "In 1978, over 13 days at Camp David, Anwar Sadat, Menachem Begin and Jimmy Carter hammered out a peace agreement between Israel and Egypt that remains the most profound diplomatic achievement to emerge from the Mideast conflict. In a fascinating account of the talks, Wright combines history, politics and, most of all, a gripping drama of three clashing personalities into a tale of constant plot twists and dark humor. He reminds us that Carter's visionary idealism and doggedness represented an act of surpassing political courage.");
+        nytTenBest.push(thirteendays);
 
         var allournames = new Book("All Our Names", "  by Dinaw Mengestu",
-                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "",
                                   "With great sadness and much hard truth, Mengestu's novel looks at a relationship of shared dependencies between a Midwestern social worker and a bereft African immigrant.");
-
+        nytNotable.push(allournames);
 
         var boneclocks = new Book("The Bone Clocks", "  by David Mitchell",
-                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "",
                                   "In this latest head-spinning flight into other dimensions from the author of \"Cloud Atlas,\" all borders between pubby England and the machinations of the undead begin to blur.");
+        nytNotable.push(boneclocks);
 
         var briefhistoryofsevenkillings = new Book("A Brief History of Seven Killings", "  by Marlon James",
-                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "",
                                   "Any review of Marlon James' opus must note that it is emphatically not brief, at nearly 700 dense pages, and it's so packed with murders that sometimes seven occur within just a couple of those pages. ");
+        huffpostBest.push(briefhistoryofsevenkillings);
 
         var everythinginevertoldyou = new Book("Everything I Never Told You", "  by Celeste Ng",
-                                  "http://www.nytimes.com/2014/08/31/books/review/the-bone-clocks-by-david-mitchell.html",
+                                  "",
                                   "Celeste Ng's debut novel melds mystery with family saga for a truly heartbreaking page-turner. Lydia Lee, the teenage daughter of blond Marilyn and Chinese-American James, has disappeared, and with her she's taken the fragile balance of the family's ecosystem.");
-
-        
-        var nytNotable = [];
-        nytNotable.push(allournames);
-        nytNotable.push(boneclocks);
-        var nytTenBest = [];
-        nytTenBest.push(allthelightwecannotsee);
-        var huffpostBest = [];
-        huffpostBest.push(briefhistoryofsevenkillings);
         huffpostBest.push(everythinginevertoldyou);
 
     </script>
